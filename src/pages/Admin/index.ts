@@ -1,6 +1,6 @@
 import { getAll } from "../../api/product"
 import AdminHeader from "../../components/Header/Admin"
-import Sidebar from "../../components/Sidebar"
+import SidebarAdmin from "../../components/Sidebar"
 import Product from "../../model/product"
 
 const AdminPage = {
@@ -14,7 +14,7 @@ const AdminPage = {
         ${AdminHeader.render()}
         <div class="flex mt-4 divide-x">
             <div class="w-[250px] flex-none">
-                ${Sidebar.render()}
+                ${SidebarAdmin.render()}
             </div>
             <div class="grow px-4">
                 <div class="flex justify-between">
