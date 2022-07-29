@@ -7,6 +7,9 @@ export const createProduct = (product: Product) => {
     const url = "/products"
     return instance.post(url, product)
 }
+export const product = (id: number) => {
+    return instance.get(`/product/${id}`)
+}
 
 export const getAll = () => {
     const url = "/products"
@@ -19,4 +22,7 @@ export const get = (id: number) => {
 }
  
  
- 
+export const update = (product: Product) => {
+    const url = `/products/${product.id}`;
+    return instance.put(url, product);
+}

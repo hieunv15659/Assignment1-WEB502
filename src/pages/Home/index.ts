@@ -1,7 +1,15 @@
+ 
+import UserHeader from "../../components/Header/User"
+ 
+
 const HomePage = {
     render: async () => {
-        return /*html*/`<h1>Home page</h1>`
-    }
+        return /*html*/`
+            <div>${UserHeader.render()}</div>
+            
+
+        `
+    },
 }
 
 export default HomePage

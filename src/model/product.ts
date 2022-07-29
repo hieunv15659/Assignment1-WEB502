@@ -8,6 +8,7 @@ class Product {
     feature?: string;
     description?: string;
     shortDescription?: string;
+    id: number;
     
     constructor(
         name: string,
@@ -17,7 +18,8 @@ class Product {
         category?: string,
         feature?: string,
         description?: string,
-        shortDescription?: string
+        shortDescription?: string,
+        id: number,
     ) {
         this.name = name;
         this.originalPrice = originalPrice;
@@ -27,6 +29,7 @@ class Product {
         this.feature = feature;
         this.description = description;
         this.shortDescription = shortDescription;
+        this.id = id;
     }
 }
 

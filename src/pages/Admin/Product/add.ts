@@ -50,10 +50,10 @@ const AddProductPage = {
                         <div class="flex flex-col">
                         <label  >Danh Mục</label>
                         <select class="w-full border rounded-sm h-10" id="category">
-                        <option value="Labtop">Laptop</option>
-                        <option value="Điện Thoại">Điện Thoại</option>
-                        <option value="Máy Tính">Máy Tính</option>
-                        <option value="Tai Nghe">Tai Nghe</option>
+                        <option value="laptop">Laptop</option>
+                        <option value="dienthoai">Điện Thoại</option>
+                        <option value="maytinh">Máy Tính</option>
+                        <option value="tainghe">Tai Nghe</option>
                       </select>
                     </div>
                     </div>   
@@ -77,7 +77,6 @@ const AddProductPage = {
         `
     },
     afterRender: async () => {
-
         const addProductBtn = document.querySelector('#add-product-btn')
         const inputFile = document.querySelector('#input-file')
         const previewImage = document.querySelector('#preview-image')
@@ -89,7 +88,7 @@ const AddProductPage = {
             const category = document.querySelector('#category')?.value
             const feature = document.querySelector('#feature')?.value
             const description = document.querySelector('#description')?.value
-            const shortDescription = document.querySelector('#shortDescription')?.valuez
+            const shortDescription = document.querySelector('#shortDescription')?.value
  
             if (name == ''){
                 alert("Bạn chưa cho tên sản phẩm");
@@ -104,7 +103,6 @@ const AddProductPage = {
                 alert("Bạn chưa cho mô tả của sản phẩm");
                 return false; 
             }
-
             const product = new Product(name,originalPrice,imageUrl,saleOffPrice,category,feature,description,shortDescription);
             try {
                 const data = await createProduct(product)
@@ -115,7 +113,6 @@ const AddProductPage = {
             }
 
         })
-
         inputFile?.addEventListener('change', async (e) => {
             // console.log(e.target.files)
             const file = e.target.files[0]
