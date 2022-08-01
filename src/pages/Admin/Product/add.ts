@@ -1,12 +1,14 @@
-import { upload } from "../../../api/image"
-import { createProduct } from "../../../api/product"
-import AdminHeader from "../../../components/Header/Admin"
-import Sidebar from "../../../components/Sidebar"
-import Product from "../../../model/product"
+import { cate } from "../../../api/category";
+import { upload } from "../../../api/image";
+import { createProduct } from "../../../api/product";
+import AdminHeader from "../../../components/Header/Admin";
+import Sidebar from "../../../components/Sidebar";
+import Product from "../../../model/product";
 
 const AddProductPage = {
-    render: async () => {
-        return /*html*/`
+  render: async () => {
+    const listcate: Category = await cate();
+    return /*html*/ `
         ${AdminHeader.render()}
         <div class="flex mt-4 divide-x">
             <div class="w-[250px] flex-none">
@@ -45,15 +47,16 @@ const AddProductPage = {
                         </div>
                         <div class="flex flex-col">
                             <label for="">Giá khuyến mãi:</label>
-                            <input id="saleOffPrice" type="text" placeholder="Giá khuyến mãi" class="w-full border rounded-sm h-10">
+                            <input id="saleOffPrice" type="text" placehonpmlder="Giá khuyến mãi" class="w-full border rounded-sm h-10">
                         </div>
                         <div class="flex flex-col">
                         <label  >Danh Mục</label>
                         <select class="w-full border rounded-sm h-10" id="category">
-                        <option value="laptop">Laptop</option>
-                        <option value="dienthoai">Điện Thoại</option>
-                        <option value="maytinh">Máy Tính</option>
-                        <option value="tainghe">Tai Nghe</option>
+                        ${listcate.data.map(
+                          (item) => `
+                        <option value="${item.id}">${item.name}</option>
+                        `
+                        )}
                       </select>
                     </div>
                     </div>   
@@ -74,66 +77,72 @@ const AddProductPage = {
             </div>        
             </div>
         </div>
-        `
-    },
-    afterRender: async () => {
-        const addProductBtn = document.querySelector('#add-product-btn')
-        const inputFile = document.querySelector('#input-file')
-        const previewImage = document.querySelector('#preview-image')
-        addProductBtn?.addEventListener('click', async (e) => {
-            const name = document.querySelector('#name')?.value
-            const originalPrice = document.querySelector('#originalPrice')?.value
-            const imageUrl = previewImage?.src
-            const saleOffPrice = document.querySelector('#saleOffPrice')?.value
-            const category = document.querySelector('#category')?.value
-            const feature = document.querySelector('#feature')?.value
-            const description = document.querySelector('#description')?.value
-            const shortDescription = document.querySelector('#shortDescription')?.value
- 
-            if (name == ''){
-                alert("Bạn chưa cho tên sản phẩm");
-                return false; 
-            }else if (originalPrice == ''){
-                alert("Bạn chưa cho giá sản phẩm");
-                return false; 
-            }else if (feature == ''){
-                alert("Bạn chưa cho đặc điểm sản phẩm");
-                return false; 
-            }else if (description == ''){
-                alert("Bạn chưa cho mô tả của sản phẩm");
-                return false; 
-            }
-            const product = new Product(name,originalPrice,imageUrl,saleOffPrice,category,feature,description,shortDescription);
-            try {
-                const data = await createProduct(product)
-                alert('Thêm mới thành công')
-                location.href = "/admin"
-            } catch(err) {
-                console.log(err)
-            }
+        `;
+  },
+  afterRender: async () => {
+    const addProductBtn = document.querySelector("#add-product-btn");
+    const inputFile = document.querySelector("#input-file");
+    const previewImage = document.querySelector("#preview-image");
+    addProductBtn?.addEventListener("click", async (e) => {
+      const name = document.querySelector("#name")?.value;
+      const originalPrice = document.querySelector("#originalPrice")?.value;
+      const image = previewImage?.src;
+      const saleOffPrice = document.querySelector("#saleOffPrice")?.value;
+      const category = document.querySelector("#category")?.value;
+      const feature = document.querySelector("#feature")?.value;
+      const description = document.querySelector("#description")?.value;
+      const shortDescription =
+        document.querySelector("#shortDescription")?.value;
 
-        })
-        inputFile?.addEventListener('change', async (e) => {
-            // console.log(e.target.files)
-            const file = e.target.files[0]
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onloadend = async () => {
-                 try {
-                    const res = await upload(reader.result)
-                    const data = res.data
-                    previewImage.src = data.url
-                 } catch(err) {
-                    console.log(err)
-                 }
-            }
+      if (name == "") {
+        alert("Bạn chưa cho tên sản phẩm");
+        return false;
+      } else if (originalPrice == "") {
+        alert("Bạn chưa cho giá sản phẩm");
+        return false;
+      } else if (feature == "") {
+        alert("Bạn chưa cho đặc điểm sản phẩm");
+        return false;
+      } else if (description == "") {
+        alert("Bạn chưa cho mô tả của sản phẩm");
+        return false;
+      }
+      const product: Product = {
+        name: name,
+        originalPrice: originalPrice,
+        image: image,
+        saleOffPrice: saleOffPrice,
+        category: category,
+        feature: feature,
+        description: description,
+        shortDescription: shortDescription,
+      };
+      try {
+        const data = await createProduct(product);
+        alert("Thêm mới thành công");
+        location.href = "/admin";
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    inputFile?.addEventListener("change", async (e) => {
+      // console.log(e.target.files)
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        try {
+          const res = await upload(reader.result);
+          const data = res.data;
+          previewImage.src = data.url;
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
+      // console.log('xxxxx')
+    });
+  },
+};
 
-            // console.log('xxxxx')
-        })
-    }
-}
- 
- 
-
-export default AddProductPage
+export default AddProductPage;

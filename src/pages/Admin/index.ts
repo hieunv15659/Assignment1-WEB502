@@ -1,16 +1,18 @@
-import { getAll } from "../../api/product"
-import AdminHeader from "../../components/Header/Admin"
-import SidebarAdmin from "../../components/Sidebar"
-import Product from "../../model/product"
+import { cate } from "../../api/category";
+import { getAll } from "../../api/product";
+import AdminHeader from "../../components/Header/Admin";
+import SidebarAdmin from "../../components/Sidebar";
+import Product from "../../model/product";
 
 const AdminPage = {
-    render: async () => {
-        const res = await getAll()
-        const data: Product[] = res.data
-        console.log(data);
- 
-        
-        return /*html*/`
+  render: async () => {
+    const res = await getAll();
+    const data: Product[] = res.data;
+    const listcate: Category = await cate();
+    console.log(data);
+    console.log(listcate);
+
+    return /*html*/ `
         ${AdminHeader.render()}
         <div class="flex mt-4 divide-x">
             <div class="w-[250px] flex-none">
@@ -22,15 +24,16 @@ const AdminPage = {
                     <h1 class="font-bold"> Sản phẩm chung</h1>
                         <div class="flex p-3">
                     <h1 class="font-bold w-[100%] px-8">Bộ Lọc: </h1>
-                        <select class="w-100% border rounded-sm h-10" id="category">
-                            <option value="Labtop">Laptop</option>
-                            <option value="Điện Thoại">Điện Thoại</option>
-                            <option value="Máy Tính">Máy Tính</option>
-                            <option value="Tai Nghe">Tai Nghe</option>
+                        <select class="w-[300px] border rounded-sm h-10" id="category">
+                        ${listcate.data.map(
+                          (item) => `
+                        <option value="${item.id}">${item.name}</option>
+                        `
+                        )}
                         </select>
                         </div>
                     </div>
-                    <a href="/admin/products/add">
+                    <a href="/admin/product/add">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -50,7 +53,9 @@ const AdminPage = {
                         </tr>
                     </thead>
                     <tbody>
-                    ${data.map((p, index) => /*html*/`
+                    ${data
+                      .map(
+                        (p, index) => /*html*/ `
                     <tr>
                         <td class="border text-center">${index + 1}</td>
                         <td class="border">${p.name}</td>
@@ -64,20 +69,22 @@ const AdminPage = {
                             </svg>
                         </td>
                         <td class="border">
-                        <a href="/admin/products/edit/${index + 1}">
+                        <a href="/admin/product/edit/${index + 1}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />                      
                             </svg>
                         </a>
                         </td>
                     </tr>
-                `).join('')}
+                `
+                      )
+                      .join("")}
                     </tbody>
                 </table>            
             </div>
         </div>
-        `
-    },
-}
+        `;
+  },
+};
 
-export default AdminPage
+export default AdminPage;

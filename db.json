@@ -2,16 +2,6 @@
   "users": [],
   "products": [
     {
-      "name": "Điện Thoại Samsung Galaxy A13",
-      "originalPrice": "3.960.000 ",
-      "image": "http://res.cloudinary.com/dv3vzmogk/image/upload/v1658374459/anhhtus/e4jhqtsspuxkeksucaxx.jpg",
-      "saleOffPrice": "4.190.000 ",
-      "category": "Điện Thoại",
-      "feature": "  Giải trí bất tận mỗi ngày, thoải mái thưởng thức nhiều nội dung hơn với màn hình tràn viền vô cực Infinity-V 6,6inch trên Samsung Galaxy A13. Tận hưởng nội dung hiển thị rõ ràng và sắc nét đến không ngờ nhờ màn hình Full HD+ hiển thị rõ nét bậc nhất phân khúc. ",
-      "description": " Giải trí bất tận mỗi ngày, thoải mái thưởng thức nhiều nội dung hơn với màn hình tràn viền vô cực Infinity-V 6,6inch trên Samsung Galaxy A13. Tận hưởng nội dung hiển thị rõ ràng và sắc nét đến không ngờ nhờ màn hình Full HD+ hiển thị rõ nét bậc nhất phân khúc.",
-      "id": 1
-    },
-    {
       "name": "Laptop Lenovo IP 1 11IGL05 81VT006FVN (Pentium N5030/ 4GB DDR4 2400MHz/ 256GB SSD/ 11.6 HD/ WIn 11) - Hàng Chính Hãng",
       "originalPrice": "8.990.000 ",
       "image": "http://res.cloudinary.com/dv3vzmogk/image/upload/v1658374872/anhhtus/yg3yttiydju16fyrxtcg.jpg",
@@ -132,6 +122,24 @@
       "description": "Điện thoại Vivo Y15a sở hữu một thiết kế không có quá nhiều khác biệt với các sản phẩm smartphone khác đã ra mắt trên thị trường. Máy với thiết kế màn hình giọt nước, mặt trước màn hình với tỉ lệ hiển thị lớn nhờ viền màn hình siêu mỏng.\n",
       "shortDescription": "Điện thoại Vivo Y15a sở hữu một thiết kế không có quá nhiều khác biệt với các sản phẩm smartphone khác đã ra mắt trên thị trường. Máy với thiết kế màn hình giọt nước, mặt trước màn hình với tỉ lệ hiển thị lớn nhờ viền màn hình siêu mỏng.\n",
       "id": 13
+    }
+  ],
+  "category": [
+    {
+      "id": 1,
+      "name": "Điện thoại"
+    },
+    {
+      "id": 2,
+      "name": "Máy tính"
+    },
+    {
+      "id": 3,
+      "name": "Laptop"
+    },
+    {
+      "id": 4,
+      "name": "Máy ảnh"
     }
   ]
 }

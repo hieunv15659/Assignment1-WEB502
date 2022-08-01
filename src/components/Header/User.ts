@@ -3,11 +3,11 @@ const UserHeader = {
         return (
             /*html*/`
                 <div  class="flex bg-red-500 ">
-
+                    <a href="/">
                     <div class="  justify-between ml-20">
                         <img class="w-[64px] p-2" src="/images/logo.png"/>			
                     </div>
-
+                    </a>
                     <div class="  flex ">
                     <form class="flex items-center ml-15 pl-2">   
                     <label for="simple-search" class="sr-only">Search</label>

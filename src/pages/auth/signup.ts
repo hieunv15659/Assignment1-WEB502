@@ -13,11 +13,13 @@ export const signup = {
                 <label for="email-address" class="sr-only">Email</label>
                 Email:
                 <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email">
+                <div class="text-red-500 text-sm hidden error"></div>
               </div>
               <div>
               <label for="number" class="sr-only">Số điện thoại</label>
               Số điện thoại:
               <input id="sdt" name="number" type="name" autocomplete="number" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Số điện thoại">
+              <div class="text-red-500 text-sm hidden error"></div>
             </div>
               <div>
                 <label for="password" class="sr-only">Password</label>
