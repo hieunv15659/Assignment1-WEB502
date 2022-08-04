@@ -1,7 +1,6 @@
 const UserHeader = {
-    render: () => {
-        return (
-            /*html*/`
+  render: () => {
+    return /*html*/ `
                 <div  class="flex bg-red-500 ">
                     <a href="/">
                     <div class="  justify-between ml-20">
@@ -30,7 +29,7 @@ const UserHeader = {
                     </div>
 
                     <div class="text-white pt-1 px-8 flex ">
-                    <img  class="w-7 h-7  mt-3" src="icon/map.png"  >
+                    <img  class="w-7 h-7  mt-3" src=".../icon/map.png"  >
                     <div class="flex-col">       
                         <p>Cửa hàng</p>
                         <p>gần bạn</p>
@@ -39,14 +38,14 @@ const UserHeader = {
                     </div>
 
                     <div class="text-white pt-1 px-8 flex ">
-                    <img  class="w-10 h-7  mt-3" src="icon/xe.png"  >
+                    <img  class="w-10 h-7  mt-3" src=".../icon/xe.png"  >
                     <div class="flex-col">       
                         <p>Tra cứu</p>
                         <p>đơn hàng</p>
                     </div>
 
                     <div class="text-white pt-1 px-8 flex ">
-                    <img  class="w-7 h-7  mt-2 " src="icon/giohang.png" >
+                    <img  class="w-7 h-7  mt-2 " src=".../icon/giohang.png" >
                     <div class="flex-col mt-3">       
                         <p>Giỏ Hàng</p>
                     </div>
@@ -64,9 +63,8 @@ const UserHeader = {
                         </div>
                     </div>              
                </div>
-                `   
-        )
-    }
-}
+                `;
+  },
+};
 
-export default UserHeader
+export default UserHeader;

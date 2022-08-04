@@ -2,22 +2,22 @@ class Product {
   name: string;
   originalPrice: number;
   image: string;
-  saleOffPrice?: number;
-  category?: string;
-  feature?: string;
-  description?: string;
-  shortDescription?: string;
+  saleOffPrice: number;
+  category: string;
+  feature: string;
+  longDesc: string;
+  shortDesc: string;
   id: number;
   isDelete?: boolean;
   constructor(
     name: string,
     originalPrice: number,
     image: string,
-    saleOffPrice: number,
     category: string,
     feature: string,
-    description: string,
-    shortDescription: string,
+    longDesc: string,
+    saleOffPrice: number,
+    shortDesc: string,
     id: number
   ) {
     this.name = name;
@@ -26,8 +26,8 @@ class Product {
     this.saleOffPrice = saleOffPrice;
     this.category = category;
     this.feature = feature;
-    this.description = description;
-    this.shortDescription = shortDescription;
+    this.longDesc = longDesc;
+    this.shortDesc = shortDesc;
     this.id = id;
   }
 }

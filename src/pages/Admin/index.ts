@@ -1,86 +1,104 @@
-import { cate } from "../../api/category";
-import { getAll } from "../../api/product";
+import { List } from "../../api/product";
+import { getcate } from "../../api/category";
 import AdminHeader from "../../components/Header/Admin";
-import SidebarAdmin from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar";
 import Product from "../../model/product";
 
 const AdminPage = {
   render: async () => {
-    const res = await getAll();
+    const res = await List();
     const data: Product[] = res.data;
-    const listcate: Category = await cate();
+    const listcate: Category = await getcate();
     console.log(data);
-    console.log(listcate);
-
-    return /*html*/ `
+    return /* html */ `
         ${AdminHeader.render()}
-        <div class="flex mt-4 divide-x">
-            <div class="w-[250px] flex-none">
-                ${SidebarAdmin.render()}
+        <!-- Container -->
+        <div class="flex divide-x h-screen mt-4 divide-x">
+            <!-- Siderbar -->
+            <div class="w-[250px] flex-none mt-4 ml-5">
+                ${Sidebar.render()}
             </div>
-            <div class="grow px-4">
+            <!-- Content -->
+            <div class="w-auto p-10   from-gray-100">
+            
+            <div class="main text-[#5F5E61]">
+                <h1 class="text-xl font-semibold">Dien thoai</h1>
                 <div class="flex justify-between">
-                    <div>
-                    <h1 class="font-bold"> Sản phẩm chung</h1>
-                        <div class="flex p-3">
-                    <h1 class="font-bold w-[100%] px-8">Bộ Lọc: </h1>
-                        <select class="w-[300px] border rounded-sm h-10" id="category">
+                <div class="filter w-[400px] pt-5 flex justify-between">
+                <h1 class="font-bold w-[100%] px-8">Bộ Lọc: </h1>
+                    <div class="filter-cate">
+                    <label for="category" class="font-bold w-[100%] px-8">Danh muc san pham</label><br>
+                    <select class="w-[300px] border rounded-sm h-10" name="category" id="category">
                         ${listcate.data.map(
                           (item) => `
                         <option value="${item.id}">${item.name}</option>
                         `
                         )}
-                        </select>
-                        </div>
+                    </select>
                     </div>
-                    <a href="/admin/product/add">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    </a>
                 </div>
+    
+                <a href="/admin/products/add">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                </a>
 
-                <table>
-                    <thead  >
-                        <tr>
-                        <th class="w-[5%] border">#</th>
-                        <th class="w-[20%] border ">Tên sản phẩm</th>
-                        <th class="w-[10%] border">Gía</th>
-                        <th class="w-[15%] border">Ảnh</th>
-                        <th class="w-[30%] border">Mô tả</th>
-                        <th class="w-[10%] border text-center">Ẩn/hiện</th>
-                        <th class="w-[10%] border">Thao tác</th>
-                        </tr>
-                    </thead>
+                </div>
+                <table class="w-full mt-10 text-md rounded mb-4">
+                <thead>
+                    <tr>
+                    <th class="w-[5%] border">#</th>
+                    <th class="w-[20%] border ">Tên sản phẩm</th>
+                    <th class="w-[10%] border">Gía</th>
+                    <th class="w-[15%] border">Ảnh</th>
+                    <th class="w-[30%] border">Mô tả</th>
+                    <th class="w-[10%] border text-center">Ẩn/hiện</th>
+                    <th class="w-[10%] border">Thao tác</th>
+                    </tr>
+                </thead>
                     <tbody>
                     ${data
                       .map(
-                        (p, index) => /*html*/ `
-                    <tr>
-                        <td class="border text-center">${index + 1}</td>
-                        <td class="border">${p.name}</td>
-                        <td class="border">${p.originalPrice}</td>
-                        <td class="border"><img src="${p.image}"/></td>
-                        <td class="border">${p.description}</td>
-                        <td class="border">
-                            <svg class="mx-auto" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 15.5C17.7849 15.5 19.2778 14.137 19.464 12.3681C19.4897 12.1245 19.4897 11.8755 19.464 11.6319C19.2778 9.86302 17.7849 8.5 16 8.5C14.2152 8.5 12.7222 9.86302 12.536 11.6319C12.5104 11.8755 12.5104 12.1245 12.536 12.3681C12.7222 14.137 14.2152 15.5 16 15.5Z" fill="black"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.9257 18.75H8.07434C4.75284 18.75 1.92497 16.3336 1.40694 13.0527C1.29681 12.3552 1.29681 11.6448 1.40694 10.9473C1.92497 7.6664 4.75285 5.25 8.07434 5.25H15.9257C19.2472 5.25 22.075 7.6664 22.5931 10.9473C22.7032 11.6448 22.7032 12.3552 22.5931 13.0527C22.075 16.3336 19.2472 18.75 15.9257 18.75ZM15.9257 17.25C18.5091 17.25 20.7085 15.3706 21.1114 12.8188C21.1971 12.2763 21.1971 11.7237 21.1114 11.1812C20.7085 8.62942 18.5091 6.75 15.9257 6.75L8.07434 6.75C5.49096 6.75 3.2915 8.62942 2.88859 11.1812C2.80293 11.7237 2.80293 12.2763 2.88858 12.8188C3.2915 15.3706 5.49095 17.25 8.07434 17.25H15.9257Z" fill="black"/>
-                            </svg>
-                        </td>
-                        <td class="border">
-                        <a href="/admin/product/edit/${index + 1}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />                      
-                            </svg>
-                        </a>
-                        </td>
-                    </tr>
-                `
+                        (item, index) => /* html */ `
+                        <tr class="border-t-2 hover:bg-orange-100 text-center">
+                            <td class="text-center p-3 px-5">${index + 1}</td>
+                            <td class="text-center p-3 px-5">${item.name}</td>
+                            <td class="border"><img src="${item.image}"/></td>
+                            <td class="text-center p-3 px-5">${
+                              item.originalPrice
+                            }</td>
+                            <td class="text-center p-3 px-5">${
+                              item.feature
+                            }</td>
+                            <td class="text-center p-3 px-5">
+                                <label for="default-toggle ${
+                                  item.id
+                                }" class="inline-flex relative items-center cursor-pointer">
+                                    <input type="checkbox" value="" id="default-toggle ${
+                                      item.id
+                                    }" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                </label>
+                            </td>
+                            <td class="text-center p-3 px-5">
+                                <a href="/admin/product/edit/${
+                                  item.id
+                                }" class="" >
+                                    <svg class="mx-auto"  width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.4548 3.41575C19.647 3.70687 19.615 4.10248 19.3587 4.35876L10.1663 13.5511C10.0721 13.6454 9.95445 13.7128 9.82552 13.7465L5.99709 14.7465C5.87223 14.7791 5.74352 14.7784 5.62259 14.7476C5.49402 14.7149 5.37425 14.6482 5.27723 14.5511C5.08896 14.3629 5.01462 14.0889 5.08191 13.8313L6.08191 10.0028C6.11138 9.89003 6.16667 9.77861 6.24316 9.69121L15.4696 0.46967C15.5504 0.388906 15.6477 0.32846 15.7535 0.291631C15.832 0.264324 15.9152 0.25 15.9999 0.25C16.1989 0.25 16.3896 0.329017 16.5303 0.46967L19.3587 3.2981C19.3953 3.33471 19.4273 3.37416 19.4548 3.41575ZM17.7677 3.82843L15.9999 2.06066L7.48178 10.5788L6.85679 12.9716L9.24955 12.3466L17.7677 3.82843Z" fill="black"/>
+                                        <path d="M17.6413 15.1603C17.9147 12.8227 18.0017 10.4688 17.9023 8.12079C17.8975 8.00837 17.9398 7.89898 18.0194 7.81942L19.0027 6.83609C19.1236 6.71519 19.3302 6.79194 19.3415 6.96254C19.5264 9.75219 19.4563 12.5545 19.1311 15.3346C18.8946 17.3571 17.2703 18.9421 15.2582 19.167C11.7916 19.5544 8.20828 19.5544 4.74171 19.167C2.72965 18.9421 1.10532 17.3571 0.868765 15.3346C0.454227 11.7903 0.454227 8.20973 0.868765 4.66543C1.10532 2.6429 2.72965 1.05789 4.74171 0.833012C7.37146 0.539099 10.0684 0.468149 12.7306 0.620161C12.9022 0.629958 12.9804 0.837575 12.8589 0.959093L11.8663 1.95165C11.7876 2.03034 11.6797 2.07261 11.5685 2.06885C9.34205 1.99376 7.10049 2.07872 4.90832 2.32373C3.57821 2.47239 2.51272 3.522 2.35861 4.83968C1.95761 8.26821 1.95761 11.7318 2.35861 15.1603C2.51272 16.478 3.57821 17.5276 4.90832 17.6763C8.26417 18.0513 11.7357 18.0513 15.0916 17.6763C16.4217 17.5276 17.4872 16.478 17.6413 15.1603Z" fill="black"/>
+                                    </svg>                      
+                                </a>
+                            </td>
+                        </tr>
+                    `
                       )
                       .join("")}
+
                     </tbody>
-                </table>            
+                </table>
+            </div>
             </div>
         </div>
         `;

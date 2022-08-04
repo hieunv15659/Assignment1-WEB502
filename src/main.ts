@@ -1,25 +1,31 @@
 import "./style.css";
-
+import typescriptLogo from "./typescript.svg";
 import Navigo from "navigo";
-import AdminPage from "./pages/Admin";
 import HomePage from "./pages/Home";
 import AddProductPage from "./pages/Admin/Product/add";
+
+import AdminPage from "./pages/Admin";
 import EditProductPage from "./pages/Admin/Product/editproduct";
+import detailProduct from "./pages/Home/detail";
 import signin from "./pages/auth/signin";
 import signup from "./pages/auth/signup";
-import detailProduct from "./pages/Home/detail";
+import Cart from "./pages/Home/cart";
 
 const router = new Navigo("/", { linksSelector: "a" });
 
-type ComponentBase = {
-  render: () => Promise<string>;
+export type ComponentBase = {
+  render: (id: any) => Promise<string>;
   afterRender?: () => void;
 };
 
-const print = async (component: ComponentBase, params?: any) => {
-  document.getElementById("app").innerHTML = await component.render(params);
+const print = async (
+  component: ComponentBase,
+  id: ComponentBase,
+  params?: any
+) => {
+  document.getElementById("app").innerHTML = await component.render(id);
   if (component.afterRender) {
-    component.afterRender();
+    component.afterRender(id);
   }
 };
 
@@ -27,26 +33,31 @@ router.on({
   "/": () => {
     print(HomePage);
   },
-  "/signup": () => {
-    print(signup);
-  },
-  "/signin": () => {
-    print(signin);
-  },
   "/admin": () => {
     print(AdminPage);
   },
-  "/admin/product/add": () => {
+  "/admin/products/add": () => {
     print(AddProductPage);
   },
-  "/admin/product/edit/:id": (params: any) => {
-    const id = +params.data.id;
+  "/admin/product/edit/:id": (data: any) => {
+    const id = +data.data.id;
     console.log(id);
     print(EditProductPage, id);
   },
   "/product/:id": (params: any) => {
-    print(detailProduct, params);
+    const id = params.data.id;
+    console.log(id);
+    print(detailProduct, id);
+  },
+  "/Cart/": (params: any) => {
+    print(Cart);
+  },
+
+  "/signin": () => {
+    print(signin);
+  },
+  "/signup": () => {
+    print(signup);
   },
 });
-
 router.resolve();
