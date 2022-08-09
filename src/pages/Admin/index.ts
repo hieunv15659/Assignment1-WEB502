@@ -1,4 +1,4 @@
-import { List } from "../../api/product";
+import { List, remove } from "../../api/product";
 import { getcate } from "../../api/category";
 import AdminHeader from "../../components/Header/Admin";
 import Sidebar from "../../components/Sidebar";
@@ -102,6 +102,16 @@ const AdminPage = {
             </div>
         </div>
         `;
+  },
+  afterRender: async () => {
+    const checkbox = document.querySelector("#default-toggle");
+    checkbox?.addEventListener("click", async function (e) {
+      checkbox.remove();
+      const key = checkbox.params.id;
+      const deta: Product = data[key];
+
+      console.log(deta);
+    });
   },
 };
 

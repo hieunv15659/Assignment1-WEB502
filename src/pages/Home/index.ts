@@ -1,6 +1,8 @@
 import { List } from "../../api/product";
 import footer from "../../components/Footer";
 import UserHeader from "../../components/Header/User";
+import Phone from "../../components/Phone";
+import phone2 from "../../components/phone2";
 import HomeSidebar from "../../components/Sidebar/home";
 import Product from "../../model/product";
 
@@ -55,6 +57,8 @@ const HomePage = {
                   })
                   .join("")}     
             </div>
+            ${phone2.render()}
+            ${Phone.render()}
             ${footer.render()}
 
         `;

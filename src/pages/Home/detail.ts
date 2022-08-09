@@ -7,17 +7,16 @@ const detailProduct = {
   render: async (id: Number) => {
     const list = await getAll(id);
     const data: Product = list.data;
-    console.log(data);
+
     const listdata: Category = await catebyId(id);
     const listcate = listdata.data;
 
     const itemProd: Product = list.data;
     const idbyProd = itemProd.category;
-    console.log(idbyProd);
 
     return /*html*/ `        
            ${UserHeader.render()}
-           <div>   
+           <div class="md:place-items-center">   
            <nav class="bg-gray-50 dark:bg-gray-700">
            <div class="py-3 px-4 mx-auto max-w-screen-xl md:px-8">
                <div class="flex items-center">
@@ -46,7 +45,7 @@ const detailProduct = {
               <div class="grid gap-2 grid-cols-2 py-12 ">
 
                   <div class="px-24 ">
-                    <img src="${data.image}"/>   
+                    <img src="${data.image}" id="img-post" name="img-post"/>   
                     <div class="flex pt-6 p-8">
                            <div class="border border-indigo-600 rounded-lg w-20 grid mr-4  place-items-center ">
                               <img class="w-5 h-5 " src="../icon/sao.png"  >
@@ -66,8 +65,6 @@ const detailProduct = {
  
   
                   </div>
-               
-
 
                   <div>
                       <div class="flex pt-6 ">
@@ -77,12 +74,12 @@ const detailProduct = {
                           <p class="px-8 line-through">${data.originalPrice}đ<p>
                       </div>
              
-                      <div class="py-8">Mô tả ngắn :${data.shortDesc}</div>  
+                      <div class="py-8 ">Mô tả ngắn :${data.shortDesc}</div>  
  
                       <div class="flex my-32">
-                        <a href="/Cart"><button type="button" class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" id="btn_mua"> Mua Ngay</button></a> 
+                        <a  ><button type="button" class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" id="cart"> Mua Ngay</button></a> 
                         <div>
-                          <a href="/Cart"><div class="w-20 mr-2 mb-2    border border-red-600    grid mr-4  place-items-center "><img src="../icon/Icon-cart.jpg"> </div> </a> 
+                          <a  ><div class="w-20 mr-2 mb-2    border border-red-600    grid mr-4  place-items-center "><img src="../icon/Icon-cart.jpg"> </div> </a> 
                            <p class="flex">Thêm vào giỏ hàng</p>
                         </div>   
                       </div>
@@ -90,23 +87,57 @@ const detailProduct = {
 
               </div>
               <div class="">
-                  <h1 class="px-24 text-xl">Sản phẩm tương tự</h1>
+                  <h1 class="px-24 text-xl ">Sản phẩm tương tự</h1>
                   <div>
                           <div> 
 
                           </div>
                   </div>
               </div>
-              <div class="pt-14">
-                <div class="absolute    h-100px p-4  bg-gray-200">
-                  <p class="flex justify-center text-red-600 text-xl">ĐẶC ĐIỂM NỔI BẬT</p>
-                  <p class="pt-12 py-8 flex justify-center">${data.feature}</p>
+              <div class="pt-14 px-28 justify-center">
+                  <div class="   px-28  h-100px p-4  bg-gray-200  ">
+                    <p class="flex justify-center text-red-600 text-xl">ĐẶC ĐIỂM NỔI BẬT</p>
+                    <p class="pt-6 py-8 flex justify-center">${data.feature}</p>
+                  </div>
                 </div>
-              </div>
             </div>
-             <p class="pt-60 py-8 flex justify-center">${data.shortDesc}</p>
-            <div class="bottom-0   pt-60"> ${footer.render()}</div>
+             <p class="pt-24 px-28 py-8 flex justify-center ">${
+               data.longDesc
+             }</p>
+            <div class="bottom-0   pt-24"> ${footer.render()}</div>
         `;
+  },
+  afterRender: async () => {
+    const btnmua = document.querySelector("#cart");
+
+    btnmua?.addEventListener("click", async function (e) {
+      const name = document.querySelector("#name")?.value;
+      const price = document.querySelector("#originalPrice")?.value;
+      const sale = document.querySelector("#saleOffPrice")?.value;
+
+      const productCart: Product = {
+        name: name,
+        originalPrice: price,
+        saleOffPrice: sale,
+      };
+
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (cart) {
+        const index = cart.findIndex((x) => x._id === productCart._id);
+        if (index === -1) {
+          cart.push(productCart);
+        }
+        localStorage.setItem("cart", JSON.stringify([...cart]));
+      } else {
+        localStorage.setItem("cart", JSON.stringify([productCart]));
+      }
+      const newCart = JSON.parse(localStorage.getItem("cart"));
+      console.log(newCart, "localstorage");
+      if (productCart) {
+        alert("Bạn đã thêm sản phẩm thành công");
+      }
+      window.location.href = "/Cart";
+    });
   },
 };
 

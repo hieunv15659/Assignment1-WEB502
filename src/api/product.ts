@@ -19,6 +19,10 @@ export const Read = (id: number) => {
   const url = `/products/${id}`;
   return instance.get(url);
 };
+export const listcate = (id: number) => {
+  const url = `/products/${id}`;
+  return instance.get(url);
+};
 export const Update = (product: Product[]) => {
   return instance.put(`/products/${product.id}`, product);
 };

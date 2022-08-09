@@ -1,5 +1,5 @@
 import "./style.css";
-import typescriptLogo from "./typescript.svg";
+
 import Navigo from "navigo";
 import HomePage from "./pages/Home";
 import AddProductPage from "./pages/Admin/Product/add";
@@ -49,7 +49,7 @@ router.on({
     console.log(id);
     print(detailProduct, id);
   },
-  "/Cart/": (params: any) => {
+  "/Cart": () => {
     print(Cart);
   },
 
